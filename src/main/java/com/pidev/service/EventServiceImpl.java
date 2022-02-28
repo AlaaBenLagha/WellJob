@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pidev.models.Event;
+import com.pidev.models.EventParticipant;
 import com.pidev.models.Theme;
 import com.pidev.models.User;
 import com.pidev.repository.EventRepository;
@@ -72,10 +73,6 @@ public class EventServiceImpl  implements IEventService{
 		Date date= new Date() ;
 		
 		Date date2= this.addDays(date, 7);
-		
-		
-		
-		
 			
 			Set<Event> events =eventRepository.EventInterest(thems,date,date2) ;
 			for (Event ev:events){
@@ -96,6 +93,14 @@ public class EventServiceImpl  implements IEventService{
 		return cal.getTime();
 		
 	}
+
+public Event getTrendingEvent() {
+	
+	Date date= new Date() ;
+	Date date2= this.addDays(date, 7);
+	 EventParticipant eventParticipant=eventRepository.getEventbyParticipant(date, date2);
+	return eventRepository.findById(eventParticipant.getEventId()).orElse(null) ;
+}
 
 
 }

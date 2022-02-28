@@ -16,4 +16,5 @@ public interface IEventService {
 	public List<Event> retrieveEvents();
 	public void AlterEvent(Long idE,Long capacity, String infos,String name,String prog);
 	public Set<Event> findInterestEvent(User u);
+	
 }

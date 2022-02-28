@@ -52,9 +52,10 @@ private static final long serialVersionUID = 1L;
 	private String Program;
 	private String Infos;
 	private Long Capacity ; 
+	private int LikeEvent;
 	@Enumerated(EnumType.STRING)
 	public Theme ThemeEvent;  
-	@JsonIgnore
+	//@JsonIgnore
 	@ManyToMany(mappedBy="events", cascade = CascadeType.ALL )
 	private Set<User> users;
 	
