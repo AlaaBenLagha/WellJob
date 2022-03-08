@@ -2,17 +2,23 @@ package com.pidev.models;
 
 import java.io.Serializable;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -36,6 +42,7 @@ import lombok.experimental.FieldDefaults;
 @ToString
 @Table(name ="users")
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -43,7 +50,7 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="Id_User")
-	private Long IdUser;
+	private long IdUser;
 	private String UserName;
 	private String Password;
 	@Enumerated(EnumType.STRING)
@@ -53,8 +60,8 @@ public class User implements Serializable {
 	private UserRank Rank;
 	private String Favoris;
 	private String Departement;
-	@Enumerated(EnumType.STRING)
-	private Theme interests; 
+	@ElementCollection
+	private List<String> interests; 
 	
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
@@ -81,7 +88,7 @@ public class User implements Serializable {
 	@OneToOne
 	private MessageBox messageBox;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	private Set<Event> events;
 	
 	
@@ -89,7 +96,8 @@ public class User implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
 	private Set<Articles> articles;
 	
-	
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	private Location location;
 
 	
 	

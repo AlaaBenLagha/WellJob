@@ -15,20 +15,34 @@ import com.pidev.models.Event;
 import com.pidev.models.EventParticipant;
 import com.pidev.models.Theme;
 
-
 @Repository
-public interface EventRepository extends JpaRepository<Event,Long> {
-	
-	
-	@Query(value="Select e FROM events as e  where e.theme_event LIKE :eventS and e.date_event BETWEEN ':dateToday' and ':weeklater'",nativeQuery = true)
-	public Set<Event> EventInterest(@Param("eventS") Theme eventS,@Param("dateToday") Date date,@Param("weeklater") Date weeklater);
+public interface EventRepository extends JpaRepository<Event, Long> {
 
-	
-	
-	
-	@Query(value="select count(users_id_user),events_id_event from users_events where events_id_event in (select e.id from events as e where   e.date_event BETWEEN 'dateToday' and ':weeklater') group by events_id_event DESC LIMIT 1 ",nativeQuery = true)
-	public EventParticipant getEventbyParticipant(@Param("dateToday") Date date,@Param("weeklater") Date weeklater);
-	
-	
+	// @Query(value="Select * FROM events e where e.theme_event LIKE :eventS and
+	// e.date_event BETWEEN ':dateToday' and ':weeklater'",nativeQuery = true)
+	@Query("Select e from Event as e  where e.themeEvent= ?1 and e.dateEvent BETWEEN ?2 and ?3")
+	public Set<Event> EventInterest(Theme eventS, Date date, Date weeklater);
+
+	// @Query(value="select count(users_id_user),events_id_event from events_users "
+	 //		+ "where events_id_event in (select e.id_event from events as e where e.date_event BETWEEN 'dateToday' and ':weeklater') and max(like_event) group "
+	 //		+ " by events_id_event DESC LIMIT 1 ",nativeQuery = true)
+	//@Query("select COUNT(u) as nb ,e.idEvent from User as  u ,Event as e where e.idEvent in (select ev.idEvent from Event ev where e.dateEvent BETWEEN ?1 and ?2)"
+			//+ " and  e.likeEvent=MAX(e.likeEvent) group by e.idEvent order by nb DESC ")
+	@Query("select Count(u) ,e.idEvent from User as u join Event as e"
+			+ " where e.idEvent in (select ev.idEvent from Event ev where e.dateEvent BETWEEN ?1 and ?2)"
+			+ " and  e.likeEvent=MAX(e.likeEvent) group by e.idEvent order by nb DESC")
+	public EventParticipant getEventbyParticipant( Date date,  Date weeklater);
+
+	@Query("select e from Event as e where e.likeEvent=(select MAX(ev.likeEvent) FROM Event as ev )")
+	public Event getEventByMaxLike();
+
+	@Query("select e from Event as e where  SIZE(e.users)<e.capacity ")
+	public List<Event> getEventByParticipant();
+
+	@Query("select e from User as  u,Event as e where  u.id=?1")
+	public List<Event> getEventsByuser(long idUser);
+
+	@Query("Select e from Event as e  where e.dateEvent BETWEEN ?1 and ?2")
+	public Set<Event> getAlltheEventsByDate(Date date, Date weeklater);
 
 }

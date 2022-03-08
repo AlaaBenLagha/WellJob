@@ -8,12 +8,17 @@ import org.springframework.stereotype.Service;
 import com.pidev.models.CommentEvent;
 import com.pidev.models.Event;
 import com.pidev.repository.CommentEventRepository;
+import com.pidev.repository.EventRepository;
+import com.pidev.repository.UserRepository;
 import com.pidev.serviceInterface.ICommentEventService;
 
 @Service
 public class CommentEventServiceImpl implements ICommentEventService {
 	@Autowired
 	CommentEventRepository commentEventRepository;
+	@Autowired
+	EventRepository eventRepository;
+
 
 
 	@Override
@@ -49,6 +54,15 @@ public class CommentEventServiceImpl implements ICommentEventService {
 		return (List<CommentEvent>) commentEventRepository.findAll();
 	}
 
-
+	@Override
+	public void AddandAssignComment(List<CommentEvent> comments, long idEvent) {
+		commentEventRepository.saveAll(comments);
+	Event event=eventRepository.findById(idEvent).orElse(null);
+	for(CommentEvent comment: comments)
+	{
+		comment.setEvent(event);
+	}
+	commentEventRepository.saveAll(comments);
+	}
 
 }

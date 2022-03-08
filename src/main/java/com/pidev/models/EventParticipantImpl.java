@@ -4,7 +4,7 @@ public class EventParticipantImpl implements EventParticipant {
 
 	
 	private long eventId;
-	private int participant;
+	private long participant;
 	
 	
 	@Override
@@ -13,7 +13,7 @@ public class EventParticipantImpl implements EventParticipant {
 	}
 
 	@Override
-	public int getParticipant() {
+	public long getParticipant() {
 		return participant;
 	}
 

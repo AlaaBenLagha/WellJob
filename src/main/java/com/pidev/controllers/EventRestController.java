@@ -2,8 +2,10 @@ package com.pidev.controllers;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pidev.models.Event;
+import com.pidev.models.User;
 import com.pidev.repository.EventRepository;
+import com.pidev.service.MatchingAlgorithmEvent;
 import com.pidev.serviceInterface.IEventService;
 
 import io.swagger.annotations.Api;
@@ -29,7 +33,8 @@ public class EventRestController {
 
 	@Autowired
 	IEventService EventService;
-	
+	@Autowired
+	MatchingAlgorithmEvent algorithmEvent;
 	
 	@ApiOperation(value = "Add Event")
 	@PostMapping("/add-event")
@@ -57,14 +62,40 @@ public class EventRestController {
 	
 	@DeleteMapping("delete-event{idE}")
 	@ResponseBody
-	public void DeleteEvent(@PathVariable Long idE)
+	public void DeleteEvent(@PathVariable long idE)
 	{
 		EventService.deleteEvent(idE);
 	}
 	
+	@GetMapping("suggest-event/{iduser}")
+	@ResponseBody
+	public ResponseEntity<Set<Event>> suggestEvent(@PathVariable("iduser") long iduser){
+		return ResponseEntity.ok(algorithmEvent.getAlltheEvent(iduser));
+	}
 	
 	
+	@PutMapping("/assignUser-to-event/{idUser}/{idEvent}")
+	@ResponseBody
+	public void AssignUsertoEvent(@PathVariable("idUser") 
+	long idUser,@PathVariable("idEvent") long idEvent) {
+		EventService.AssignUsertoEvent(idUser, idEvent);
+	}
 	
+	
+	/*@GetMapping("/suggest-event/{userId}")
+	@ResponseBody
+	public Set<Event> suggestEvent(@PathVariable("userId") long userId)
+	{
+		return EventService.findInterestEvent(userId); 
+	}*/
+	
+	
+	@GetMapping("/trending-event")
+	@ResponseBody
+	public  Event TrendingEvent()
+	{
+		return EventService.getTrendingEvent();
+	}
 	
 	
 }

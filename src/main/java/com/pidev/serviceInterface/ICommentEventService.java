@@ -11,4 +11,5 @@ public interface ICommentEventService {
 	public void deleteEventComment (Long idC);
 	public List<CommentEvent> retrieveComment();
 	public void AlterComment(Long idC,String comment);
+	public void AddandAssignComment(List<CommentEvent> comments, long idEvent);
 }

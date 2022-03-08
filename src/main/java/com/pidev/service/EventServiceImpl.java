@@ -10,17 +10,28 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pidev.models.CommentEvent;
 import com.pidev.models.Event;
 import com.pidev.models.EventParticipant;
 import com.pidev.models.Theme;
 import com.pidev.models.User;
+import com.pidev.repository.CommentEventRepository;
 import com.pidev.repository.EventRepository;
+import com.pidev.repository.UserRepository;
 import com.pidev.serviceInterface.IEventService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class EventServiceImpl  implements IEventService{
 	@Autowired
 	EventRepository eventRepository;
+	@Autowired
+	UserRepository userRep;
+	@Autowired
+	CommentEventRepository commentRep;
+	
 	Set<Event> eventsFinal;
 	public EventServiceImpl(Set<Event> events) {
 		// TODO Auto-generated constructor stub
@@ -33,7 +44,7 @@ public class EventServiceImpl  implements IEventService{
 	}
 
 	@Override
-	public void deleteEvent(Long idE) {
+	public void deleteEvent(long idE) {
 		if(eventRepository.findById(idE).isPresent())
 		{
 			Event e=eventRepository.findById(idE).get();
@@ -65,10 +76,21 @@ public class EventServiceImpl  implements IEventService{
 	}
 
 	@Override
-	public Set<Event> findInterestEvent(User u) {
+	public void AssignUsertoEvent(long idUser, long idEvent) {
+		User user=userRep.findById(idUser).orElse(null);
+		Event event=eventRepository.findById(idEvent).orElse(null);
+		log.info("user: "+user.getUserName());
+		log.info("event: "+event.getNameEvent());
+		event.getUsers().add(user);
+		eventRepository.save(event);
+	}
+
+	
+
+	/*@Override
+	public Set<Event> findInterestEvent(long idu) {
+		User u=userRep.findById(idu).orElse(null);
 		Theme thems = u.getInterests();
-		
-		
 		
 		Date date= new Date() ;
 		
@@ -76,14 +98,17 @@ public class EventServiceImpl  implements IEventService{
 			
 			Set<Event> events =eventRepository.EventInterest(thems,date,date2) ;
 			for (Event ev:events){
+				log.info(ev.toString());
+
 				if(ev.getCapacity()>ev.getUsers().size()){
+					log.info(ev.toString());
 					eventsFinal.add(ev);
 				}
 			}
 		
 		return eventsFinal;
 	}
-	
+	*/
 	
 	public Date addDays(Date date ,int days){
 		Calendar cal= Calendar.getInstance();
@@ -94,13 +119,13 @@ public class EventServiceImpl  implements IEventService{
 		
 	}
 
-public Event getTrendingEvent() {
+		public Event getTrendingEvent() {
 	
-	Date date= new Date() ;
-	Date date2= this.addDays(date, 7);
-	 EventParticipant eventParticipant=eventRepository.getEventbyParticipant(date, date2);
-	return eventRepository.findById(eventParticipant.getEventId()).orElse(null) ;
-}
+			Date date= new Date() ;
+			Date date2= this.addDays(date, 7);
+			 EventParticipant eventParticipant=eventRepository.getEventbyParticipant(date, date2);
+			return eventRepository.findById(eventParticipant.getEventId()).orElse(null) ;
+		}
 
 
 }
