@@ -58,14 +58,14 @@ private static final long serialVersionUID = 1L;
 	private int likeEvent;
 	
 	public String themeEvent;  
-	//@JsonIgnore
+	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL )
 	private Set<User> users;
 	
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="event")
 	private List<CommentEvent> commentEvents;
-	
+	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Location location;
 	

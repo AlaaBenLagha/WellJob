@@ -60,8 +60,8 @@ public class User implements Serializable {
 	private UserRank Rank;
 	private String Favoris;
 	private String Departement;
-	@ElementCollection
-	private List<String> interests; 
+	
+	private String interests; 
 	
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")

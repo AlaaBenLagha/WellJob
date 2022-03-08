@@ -37,21 +37,25 @@ public class MatchingAlgoEventImp implements MatchingAlgorithmEvent {
 
 	@Override
 	public boolean MaxLike(Event event) {
-		// TODO Auto-generated method stub
-		return event.equals(eventRepository.getEventByMaxLike());
+		int maxlike=eventRepository.getmaxlike();
+		return event.equals(eventRepository.getEventByMaxLike(maxlike));
 	}
 
 	@Override
 	public boolean ThemeCheck(Event event, User user) {
 		// TODO Auto-generated method stub
+		/*
 		for (String theme : user.getInterests()) {
 			if (theme.equals(event.themeEvent)) {
 				return true;
 			}
 		}
 
-		return false;
+		return false;*/
+		System.out.print("testtest"+user.getInterests());
+		return false ; 
 	}
+		
 
 	@Override
 	public boolean locationCheck(Location locationEvent, Location locationUser) {
@@ -83,7 +87,7 @@ public class MatchingAlgoEventImp implements MatchingAlgorithmEvent {
 			eventTreeMap=new TreeMap<Integer, Event>() ;
 		User user = userRepository.findById(idUser).orElse(null);
 		Set<Event> events = eventRepository.getAlltheEventsByDate(new Date(), addDays(new Date(), 7));
-		
+		System.out.print("aaa"+events);
 		
 		for (Event event : events) {
 

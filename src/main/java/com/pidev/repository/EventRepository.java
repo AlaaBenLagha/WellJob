@@ -28,20 +28,45 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 	 //		+ " by events_id_event DESC LIMIT 1 ",nativeQuery = true)
 	//@Query("select COUNT(u) as nb ,e.idEvent from User as  u ,Event as e where e.idEvent in (select ev.idEvent from Event ev where e.dateEvent BETWEEN ?1 and ?2)"
 			//+ " and  e.likeEvent=MAX(e.likeEvent) group by e.idEvent order by nb DESC ")
-	@Query("select Count(u) ,e.idEvent from User as u join Event as e"
-			+ " where e.idEvent in (select ev.idEvent from Event ev where e.dateEvent BETWEEN ?1 and ?2)"
-			+ " and  e.likeEvent=MAX(e.likeEvent) group by e.idEvent order by nb DESC")
-	public EventParticipant getEventbyParticipant( Date date,  Date weeklater);
+	
+	
+	//@Query("select Count(u) ,e.idEvent from User as u join Event as e"
+			//+ " where e.idEvent in (select ev.idEvent from Event ev where e.dateEvent BETWEEN ?1 and ?2)"
+			//+ " and  e.likeEvent=MAX(e.likeEvent) group by e.idEvent order by nb DESC")
+	//public EventParticipant getEventbyParticipant( Date date,  Date weeklater);
 
-	@Query("select e from Event as e where e.likeEvent=(select MAX(ev.likeEvent) FROM Event as ev )")
-	public Event getEventByMaxLike();
+	@Query("select count(u) ,e.idEvent from User u join Event e where e.idEvent=?1 and e.likeEvent=?2")
+	public EventParticipant getNbUsers(long ide,int maxlike);
+	
+	@Query("select e from Event e where e.dateEvent BETWEEN ?1 and ?2")
+	public Set<Event> getEventInDate(Date date,  Date weeklater);
+	
+	
+	@Query("select MAX(e.likeEvent) from Event e group by e.idEvent order by nb DESC ")
+	public int maxlike();
+	
+	
+	
+	
+	@Query("select e from Event as e where e.likeEvent=?1")
+	public Event getEventByMaxLike(int nb);
 
+	@Query("select MAX(e.likeEvent) from Event e")
+	public int getmaxlike();
+	
+	
+	
+	
 	@Query("select e from Event as e where  SIZE(e.users)<e.capacity ")
 	public List<Event> getEventByParticipant();
 
+	
+	
 	@Query("select e from User as  u,Event as e where  u.id=?1")
 	public List<Event> getEventsByuser(long idUser);
 
+	
+	
 	@Query("Select e from Event as e  where e.dateEvent BETWEEN ?1 and ?2")
 	public Set<Event> getAlltheEventsByDate(Date date, Date weeklater);
 

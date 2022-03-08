@@ -123,8 +123,32 @@ public class EventServiceImpl  implements IEventService{
 	
 			Date date= new Date() ;
 			Date date2= this.addDays(date, 7);
-			 EventParticipant eventParticipant=eventRepository.getEventbyParticipant(date, date2);
-			return eventRepository.findById(eventParticipant.getEventId()).orElse(null) ;
+			/*
+			 * 			long ide=eventRepository.getEventInDate(date, date2);
+			 * 			int maxlike=eventRepository.maxlike();
+			EventParticipant eventParticipant=eventRepository.getNbUsers(ide, maxlike);
+						return eventRepository.findById(eventParticipant.getEventId()).orElse(null) ;
+
+			 */
+			Set<Event> events =eventRepository.getEventInDate(date, date2);
+			Event maxLikesEvent = null ;
+			
+			for (Event e : events)
+			{
+				if (e.getCapacity() == e.getUsers().size())
+					continue ;
+				
+				if (maxLikesEvent == null)
+					maxLikesEvent = e  ;
+				else if (e.getLikeEvent()>maxLikesEvent.getLikeEvent())
+					maxLikesEvent = e ;
+					
+			}
+			System.out.println("test"+maxLikesEvent);
+			return maxLikesEvent ;
+			
+			
+
 		}
 
 
