@@ -66,7 +66,7 @@ public class CommentEventRestController {
 	
 	@PostMapping("/add-listComments/{idEvent}")
 	@ResponseBody
-	void ajouterEtaffecterListComments(@RequestBody List<CommentEvent> comments,@PathVariable("idEvent") long idEvent) {
+	void AddandAssignListComments(@RequestBody List<CommentEvent> comments,@PathVariable("idEvent") long idEvent) {
 	   CommentEventService.AddandAssignComment(comments, idEvent);
 	}
 	

@@ -16,6 +16,7 @@ import com.pidev.models.Theme;
 import com.pidev.models.User;
 import com.pidev.repository.EventRepository;
 import com.pidev.repository.UserRepository;
+import com.pidev.serviceInterface.MatchingAlgorithmEvent;
 @Service
 public class MatchingAlgoEventImp implements MatchingAlgorithmEvent {
 
@@ -43,7 +44,6 @@ public class MatchingAlgoEventImp implements MatchingAlgorithmEvent {
 
 	@Override
 	public boolean ThemeCheck(Event event, User user) {
-		// TODO Auto-generated method stub
 		/*
 		for (String theme : user.getInterests()) {
 			if (theme.equals(event.themeEvent)) {
@@ -59,14 +59,12 @@ public class MatchingAlgoEventImp implements MatchingAlgorithmEvent {
 
 	@Override
 	public boolean locationCheck(Location locationEvent, Location locationUser) {
-		// TODO Auto-generated method stub
 
 		return locationEvent.equals(locationUser);
 	}
 
 	@Override
 	public boolean capacityCheck(Event event) {
-		// TODO Auto-generated method stub
 
 		return event.getCapacity() > event.getUsers().size();
 	}
@@ -87,7 +85,7 @@ public class MatchingAlgoEventImp implements MatchingAlgorithmEvent {
 			eventTreeMap=new TreeMap<Integer, Event>() ;
 		User user = userRepository.findById(idUser).orElse(null);
 		Set<Event> events = eventRepository.getAlltheEventsByDate(new Date(), addDays(new Date(), 7));
-		System.out.print("aaa"+events);
+
 		
 		for (Event event : events) {
 

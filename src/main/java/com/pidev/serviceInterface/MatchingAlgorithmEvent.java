@@ -1,4 +1,4 @@
-package com.pidev.service;
+package com.pidev.serviceInterface;
 
 import java.util.Date;
 import java.util.Set;

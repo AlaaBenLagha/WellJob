@@ -65,6 +65,7 @@ private static final long serialVersionUID = 1L;
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="event")
 	private List<CommentEvent> commentEvents;
+	
 	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Location location;

@@ -13,10 +13,12 @@ import org.springframework.stereotype.Service;
 import com.pidev.models.CommentEvent;
 import com.pidev.models.Event;
 import com.pidev.models.EventParticipant;
+import com.pidev.models.Location;
 import com.pidev.models.Theme;
 import com.pidev.models.User;
 import com.pidev.repository.CommentEventRepository;
 import com.pidev.repository.EventRepository;
+import com.pidev.repository.LocationRepository;
 import com.pidev.repository.UserRepository;
 import com.pidev.serviceInterface.IEventService;
 
@@ -31,8 +33,11 @@ public class EventServiceImpl  implements IEventService{
 	UserRepository userRep;
 	@Autowired
 	CommentEventRepository commentRep;
-	
+	@Autowired
+	LocationRepository locationRep;
 	Set<Event> eventsFinal;
+	
+	
 	public EventServiceImpl(Set<Event> events) {
 		// TODO Auto-generated constructor stub
 		this.eventsFinal=events;
@@ -85,7 +90,62 @@ public class EventServiceImpl  implements IEventService{
 		eventRepository.save(event);
 	}
 
+	public Date addDays(Date date ,int days){
+		Calendar cal= Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.DATE, days);
+		
+		return cal.getTime();
+		
+	}
+
+		public Event getTrendingEvent() {
 	
+			Date date= new Date() ;
+			Date date2= this.addDays(date, 7);
+		
+			Set<Event> events =eventRepository.getEventInDate(date, date2);
+			Event maxLikesEvent = null ;
+			
+			for (Event e : events)
+			{
+				if (e.getCapacity() == e.getUsers().size())
+					continue ;
+				
+				if (maxLikesEvent == null)
+					maxLikesEvent = e  ;
+				else if (e.getLikeEvent()>maxLikesEvent.getLikeEvent())
+					maxLikesEvent = e ;
+					
+			}
+			System.out.println("test"+maxLikesEvent);
+			return maxLikesEvent ;
+			
+			
+
+		}
+
+
+		@Override
+		public void AssignloctoEvent(int idLocation, long idEvent) {
+			Location location=locationRep.findById(idLocation).orElse(null);
+			Event event=eventRepository.findById(idEvent).orElse(null);
+			event.setLocation(location);
+			eventRepository.save(event);
+		}
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 	/*@Override
 	public Set<Event> findInterestEvent(long idu) {
@@ -110,46 +170,6 @@ public class EventServiceImpl  implements IEventService{
 	}
 	*/
 	
-	public Date addDays(Date date ,int days){
-		Calendar cal= Calendar.getInstance();
-		cal.setTime(date);
-		cal.add(Calendar.DATE, days);
-		
-		return cal.getTime();
-		
-	}
-
-		public Event getTrendingEvent() {
 	
-			Date date= new Date() ;
-			Date date2= this.addDays(date, 7);
-			/*
-			 * 			long ide=eventRepository.getEventInDate(date, date2);
-			 * 			int maxlike=eventRepository.maxlike();
-			EventParticipant eventParticipant=eventRepository.getNbUsers(ide, maxlike);
-						return eventRepository.findById(eventParticipant.getEventId()).orElse(null) ;
-
-			 */
-			Set<Event> events =eventRepository.getEventInDate(date, date2);
-			Event maxLikesEvent = null ;
-			
-			for (Event e : events)
-			{
-				if (e.getCapacity() == e.getUsers().size())
-					continue ;
-				
-				if (maxLikesEvent == null)
-					maxLikesEvent = e  ;
-				else if (e.getLikeEvent()>maxLikesEvent.getLikeEvent())
-					maxLikesEvent = e ;
-					
-			}
-			System.out.println("test"+maxLikesEvent);
-			return maxLikesEvent ;
-			
-			
-
-		}
-
 
 }

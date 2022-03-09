@@ -17,11 +17,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.pidev.models.CommentEvent;
 import com.pidev.models.Event;
+import com.pidev.models.Location;
 import com.pidev.models.User;
 import com.pidev.repository.EventRepository;
-import com.pidev.service.MatchingAlgorithmEvent;
 import com.pidev.serviceInterface.IEventService;
+import com.pidev.serviceInterface.IlocationService;
+import com.pidev.serviceInterface.MatchingAlgorithmEvent;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,6 +38,11 @@ public class EventRestController {
 	IEventService EventService;
 	@Autowired
 	MatchingAlgorithmEvent algorithmEvent;
+	
+	@Autowired
+	IlocationService locationService;
+	
+	
 	
 	@ApiOperation(value = "Add Event")
 	@PostMapping("/add-event")
@@ -81,15 +89,6 @@ public class EventRestController {
 		EventService.AssignUsertoEvent(idUser, idEvent);
 	}
 	
-	
-	/*@GetMapping("/suggest-event/{userId}")
-	@ResponseBody
-	public Set<Event> suggestEvent(@PathVariable("userId") long userId)
-	{
-		return EventService.findInterestEvent(userId); 
-	}*/
-	
-	
 	@GetMapping("/trending-event")
 	@ResponseBody
 	public  Event TrendingEvent()
@@ -97,5 +96,19 @@ public class EventRestController {
 		return EventService.getTrendingEvent();
 	}
 	
+	
+	@PutMapping("/add-assignLocation/{idL}/{idEvent}")
+	@ResponseBody
+	void AddAssignLocationEvent( @PathVariable("idL")int idL,@PathVariable("idEvent")long idE) {
+		EventService.AssignloctoEvent(idL, idE);
+	   
+	}
+	
+	@PostMapping("/add-location")
+	@ResponseBody	
+	public void addLocation(@RequestBody Location loc) {
+		locationService.AddLocation(loc);	
+
+	}
 	
 }

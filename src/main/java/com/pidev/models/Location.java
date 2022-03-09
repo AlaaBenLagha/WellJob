@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,12 +33,17 @@ public class Location implements Serializable {
 	private String state;
 	private String city;
 
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.PERSIST,mappedBy = "location")
 	private Set<User> users;
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.PERSIST ,mappedBy = "location")
 	private Set<Event> events;
-@Override
-public boolean equals(Object obj) {
+	
+	
+	
+	@Override
+	public boolean equals(Object obj) {
 
 	Location loc=(Location) obj;
 	if(!loc.getCountry().equals(this.getCountry())) {
