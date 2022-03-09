@@ -1,0 +1,13 @@
+package com.pidev;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class WellJobJephteFApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
