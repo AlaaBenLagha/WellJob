@@ -37,6 +37,12 @@ public class ProfilController {
 	@ResponseBody
 	public List<Profil> listMAXProfils(){
 		return iprofilService.MaxScoreProfil();
-	} 
+	}
+	
+	@GetMapping("/Search-profil")
+	@ResponseBody
+	public List<Profil> listSearchProfil(){
+		return iprofilService.SearchProfil();
+	}
 
 }

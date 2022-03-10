@@ -13,4 +13,7 @@ public interface ProfilRepository extends CrudRepository<Profil, Long> {
 	
 	@Query(value = "SELECT * FROM profil pf WHERE pf.score = (SELECT MAX(score) from profil)" , nativeQuery = true)
 	List<Profil> retrieveProfilByMaxScore(); 
+	@Query(value ="SELECT * FROM profil pf WHERE pf.name LIKE 'P%' ",nativeQuery = true)
+	List<Profil> SearchProfil();
+	
 }

@@ -31,4 +31,9 @@ public class ProfilServiceImpl implements IProfilService{
 		return (List<Profil>)profilRepository.retrieveProfilByMaxScore();
 	}
 
+	@Override
+	public List<Profil> SearchProfil() {
+		return (List<Profil>)profilRepository.SearchProfil();
+	}
+
 }

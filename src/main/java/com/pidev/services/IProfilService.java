@@ -12,4 +12,6 @@ public interface IProfilService {
 	
 	public List<Profil>  MaxScoreProfil();
 	
+	public List<Profil>  SearchProfil();
+	
 }
