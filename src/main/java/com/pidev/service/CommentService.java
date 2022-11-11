@@ -97,11 +97,10 @@ public class CommentService {
         	||comment.contains("BASTARD")
         	||comment.contains("DICK HEAD")
         	||comment.contains("BITCH")
-        	||comment.contains("DAMN")
+        	||comment.contains("DAMN")               ){
         	
-        		
-        		) {
-        	return true;
+        		throw new SpringRedditException("Comments contains unacceptable language");
+        	
         }
         return false;
     }

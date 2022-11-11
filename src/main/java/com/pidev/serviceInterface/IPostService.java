@@ -1,8 +1,6 @@
 package com.pidev.serviceInterface;
 
-import java.util.Set;
 
-import com.pidev.dto.PostResponse;
 import com.pidev.models.Post;
 
 

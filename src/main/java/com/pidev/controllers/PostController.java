@@ -1,25 +1,36 @@
 package com.pidev.controllers;
+import static org.springframework.http.ResponseEntity.status;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 
+import com.pidev.controllers.QuizController.SortingMethod;
 import com.pidev.dto.PostRequest;
 import com.pidev.dto.PostResponse;
 import com.pidev.models.Post;
 import com.pidev.service.PostService;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.multipart.MultipartFile;
+import java.util.Set;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import com.pidev.models.Category;
+import com.pidev.models.Quiz;
+import com.pidev.serviceInterface.QuizService;
+import lombok.AllArgsConstructor;
 
-import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.http.ResponseEntity.status;
+import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/api/posts/")
@@ -44,8 +55,6 @@ public class PostController {
 	
 	@GetMapping("/by-id/{id}")
     public ResponseEntity<PostResponse> getPost(@PathVariable("id") Long id) {
-		
-		PostResponse post = postService.getPost(id);
         return status(HttpStatus.OK).body(postService.getPost(id));
     }
 
@@ -63,6 +72,8 @@ public class PostController {
 	@Autowired
 	private QueryParser translater;
 
+	
+	@Async
 	@PostMapping("/search/{content}")
 	public ResponseEntity<ArrayList<PostResponse>> searchlist(@PathVariable("content") String content) {
 		ArrayList<String> word_list = (ArrayList<String>) translater.parseQuery(content);
@@ -95,9 +106,35 @@ public class PostController {
 				candidates.add(posts_list.get(i));
 			}
 		}
-
-
+		
+		Collections.sort(candidates, new SortingMethod());
 		return ResponseEntity.ok(candidates);
+		
+	}
+	
+	
+
+
+
+	class SortingMethod implements Comparator<PostResponse> {
+
+
+
+			@Override
+			public int compare(PostResponse q1, PostResponse q2) {
+		
+				double score1 = q1.getVoteCount()*0.5 + q1.getKeywords_number()*10;
+				double score2 = q2.getVoteCount()*0.5 + q2.getKeywords_number()*10;
+					if (score1 > score2) {
+						return -1;
+							}else {
+								return 1;
+							}
+			}
 	}
 
+	
+	
+	
 }
+

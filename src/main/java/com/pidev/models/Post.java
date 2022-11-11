@@ -34,7 +34,11 @@ public class Post implements Serializable {
     @Nullable
     private String description;
     private Integer voteCount;
-    private Integer clickrate;
+    
+    
+//    @Nullable
+//    @JsonIgnore
+//    private int clickrate;
     
     
     @Nullable
@@ -63,6 +67,15 @@ public class Post implements Serializable {
 	public void setKeywords_number(int keywords_number) {
 		this.keywords_number = keywords_number;
 	}
+	
+//	
+//	 public int getClickrate() {
+//			return clickrate;
+//		}
+//
+//	public void setClickrate(int clickrate) {
+//			this.clickrate = clickrate;
+//	}
 	
 	
 	

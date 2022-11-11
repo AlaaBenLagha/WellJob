@@ -15,7 +15,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -39,15 +40,90 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable()
-                .authorizeRequests()
+    	httpSecurity.cors().and()
+        .csrf().disable()
+        .authorizeHttpRequests(authorize -> authorize
                 .antMatchers("/api/auth/**")
+                .permitAll()
+                .antMatchers(HttpMethod.GET, "/api/posts/by-id/**")
                 .permitAll()
                 .antMatchers(HttpMethod.GET, "/api/subreddit")
                 .permitAll()
+                .antMatchers(HttpMethod.GET, "/api/subreddit/**")
+                .permitAll()
+                .antMatchers(HttpMethod.POST, "/api/subreddit")
+                .permitAll()         
+                .antMatchers(HttpMethod.GET, "/api/posts/by-subreddit/**")
+                .permitAll()
+                .antMatchers(HttpMethod.GET, "/api/posts/by-user/**")
+                .permitAll()
+                .antMatchers(HttpMethod.POST, "/api/posts/search/*******")
+                .permitAll()
+                .antMatchers(HttpMethod.GET, "/api/posts/")
+                .permitAll()
+                .antMatchers(HttpMethod.POST, "/api/posts/")
+                .permitAll()
+                .antMatchers(HttpMethod.POST, "/api/votes/")
+                .permitAll()
+                .antMatchers(HttpMethod.GET, "/api/comments/by-post/**")
+                .permitAll()
+                .antMatchers(HttpMethod.GET, "/api/comments/by-user/**")
+                .permitAll()
+                .antMatchers(HttpMethod.POST, "/api/comments/")
+                .permitAll()
+                .antMatchers(HttpMethod.POST, "/api/category/add-category/")
+                .permitAll()
+                .antMatchers(HttpMethod.GET, "/api/category/getAllCategory")
+                .permitAll()
+                .antMatchers(HttpMethod.GET, "/api/category/**")
+                .permitAll()
+                .antMatchers(HttpMethod.PUT, "/api/category/updateCategory")
+                .permitAll()
+                .antMatchers(HttpMethod.DELETE, "/api/category/**")
+                .permitAll()    
+                .antMatchers(HttpMethod.POST, "/api/quiz/add")
+                .permitAll()
+                .antMatchers(HttpMethod.GET, "/api/quiz/getAllQuiz")
+                .permitAll()
+                .antMatchers(HttpMethod.GET, "/api/quiz/**")
+                .permitAll()
+                .antMatchers(HttpMethod.PUT, "/api/quiz/updateQuiz")
+                .permitAll()
+                .antMatchers(HttpMethod.DELETE, "/api/quiz/**")
+                .permitAll()
+                .antMatchers(HttpMethod.GET, "/api/quiz/active/*")
+                .permitAll()
+                .antMatchers(HttpMethod.GET, "/api/quiz/active/")
+                .permitAll()
+                .antMatchers(HttpMethod.GET, "/api/quiz/Bycategory/**")
+                .permitAll()
+                .antMatchers(HttpMethod.POST, "/api/question/evaluate-quiz")
+                .permitAll()
+                .antMatchers(HttpMethod.POST, "/api/question/add-questions")
+                .permitAll()
+                .antMatchers(HttpMethod.GET, "/api/question/ById/**")
+                .permitAll()
+                .antMatchers(HttpMethod.PUT, "/api/question/update-questions")
+                .permitAll()
+                .antMatchers(HttpMethod.DELETE, "/api/question/**")
+                .permitAll()
+                .antMatchers(HttpMethod.GET, "/api/question/**")
+                .permitAll()
+                .antMatchers(HttpMethod.GET, "/api/question/admin/**")
+                .permitAll()
+                
+                .antMatchers("/v2/api-docs",
+                        "/configuration/ui",
+                        "/swagger-resources/**",
+                        "/configuration/security",
+                        "/swagger-ui.html",
+                        "/webjars/**")
+                .permitAll()
                 .anyRequest()
-                .authenticated();
-        httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .authenticated());
+        
+        
+                
     }
 
     @Autowired
@@ -60,4 +136,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    
+    
 }

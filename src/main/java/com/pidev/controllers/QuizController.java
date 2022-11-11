@@ -6,8 +6,11 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.pidev.models.Category;
 import com.pidev.models.Quiz;
@@ -23,16 +27,7 @@ import lombok.AllArgsConstructor;
 
 
 
-import java.util.List;
 
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 
 @AllArgsConstructor
@@ -51,14 +46,13 @@ public class QuizController {
 		return ResponseEntity.ok(theQuiz);
 	}
 	
-
+	
+	
+	@Async
 	@GetMapping("/{quizId}")
+	@ResponseBody
 	public Quiz getQuiz(@PathVariable("quizId") Long qid) throws Exception {
 		Quiz quiz=this.quizService.getQuizById(qid);
-    	int click = quiz.getClickrate();
-    	click++;
-    	quiz.setClickrate(click);
-    	quizService.addQuiz(quiz);
 		return quiz;
 	}
 	
@@ -118,6 +112,9 @@ public class QuizController {
 	@Autowired
 	private QueryParser translater;
     
+	
+	
+	@Async
 	@GetMapping("/search/{content}")
 	public ResponseEntity<ArrayList<Quiz>> searchlist(@PathVariable("content") String content) {
 		ArrayList<String> word_list = (ArrayList<String>) translater.parseQuery(content);
@@ -142,10 +139,8 @@ public class QuizController {
 
 		for (int i = 0; i < quiz_list.size(); i++) {
 			String temp[] = quiz_list.get(i).getTitle().split("[^a-zA-Z0-9']+");
-//			String xtemp[] = quiz_list.get(i).getDescription().split("[^a-zA-Z0-9']+");
 			int count = 0;
-//			int count2 = quiz_list.get(i).getKeywords_number();
-//			int count3 = 0;
+
 			for (String str : temp ) {
 				if (keywords_set.contains(str)) {
 					count++;	
@@ -156,22 +151,16 @@ public class QuizController {
 				
 				
 				
-//				else{
-//					for (String sqr : xtemp ) {
-//						if (keywords_set.contains(xtemp)) {
-//							countx++;	
-//						}
-//					}
-//				}
+
 			}
 				
 			
 			
 			if (count > 0) {
-//				count3  = count + count2 ;
+
 				quiz_list.get(i).setKeywords_number(count);
 				candidates.add(quiz_list.get(i));
-//				quizService.addQuiz(quiz_list.get(i));
+
 			}
 				
 			
@@ -179,11 +168,7 @@ public class QuizController {
 			
 			
 			
-//			else {
-//				if (countx > 0) {
-//					quiz_list.get(i).setKeywords_number(countx);
-//					candidates.add(quiz_list.get(i));
-//				}	
+
 		}	
 		
 		Collections.sort(candidates, new SortingMethod());
@@ -195,12 +180,10 @@ public class QuizController {
 	
 	class SortingMethod implements Comparator<Quiz> {
 
-
-
 		@Override
 		public int compare(Quiz q1, Quiz q2) {
-			double score1 = q1.getClickrate()*0.5 + q1.getKeywords_number()*10;
-			double score2 = q2.getClickrate()*0.5 + q2.getKeywords_number()*10;
+			double score1 = q1.getViews()*0.1+ q1.getKeywords_number()*10;
+			double score2 = q2.getViews()*0.1 + q2.getKeywords_number()*10;
 			if (score1 > score2) {
 				return -1;
 			}else {

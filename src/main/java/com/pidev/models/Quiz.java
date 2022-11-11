@@ -48,9 +48,10 @@ public class Quiz implements Serializable {
 	
 	private String maxMarks;
 	
-	 private int clickrate;
+	 private int Views;
 	    
 	 private int keywords_number;
+
 	 
 	 
 	 
@@ -108,12 +109,12 @@ public class Quiz implements Serializable {
 		this.question = question;
 	}
 	
-	public int getClickrate() {
-		return clickrate;
+	public int getViews() {
+		return Views;
 	}
 
-	public void setClickrate(int clickrate) {
-		this.clickrate = clickrate;
+	public void setViews(int Views) {
+		this.Views = Views;
 	}
 
 	public int getKeywords_number() {
@@ -123,6 +124,45 @@ public class Quiz implements Serializable {
 	public void setKeywords_number(int keywords_number) {
 		this.keywords_number = keywords_number;
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
+	public String getNumberOfQuestions() {
+		return numberOfQuestions;
+	}
+
+	public void setNumberOfQuestions(String numberOfQuestions) {
+		this.numberOfQuestions = numberOfQuestions;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	public Long getQid() {
+		return qid;
+	}
+
+	public void setQid(Long qid) {
+		this.qid = qid;
+	}
+	
+	
+
 
 	
 

@@ -195,7 +195,7 @@ public class QuestionController {
 		if (Double.parseDouble(questions.get(0).getQuiz().getMaxMarks()) == marksObtained) {
 			feedbackQuiz=("Perfect Test your are doing very well");
 		}else if (Double.parseDouble(questions.get(0).getQuiz().getMaxMarks())/2 <= (marksObtained)   &   Double.parseDouble(questions.get(0).getQuiz().getMaxMarks()) != marksObtained  ) {
-			feedbackQuiz=("Good Job  ");
+			feedbackQuiz=("Good Job but u neet to improve  ");
 			
 		}else {
 			feedbackQuiz=("U didnt pass the Quiz test u need to improve ");

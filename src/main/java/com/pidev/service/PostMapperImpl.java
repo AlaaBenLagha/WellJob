@@ -31,7 +31,7 @@ public class PostMapperImpl extends PostMapper {
             post.postId( postRequest.getPostId() );
             post.postName( postRequest.getPostName() );
             post.url( postRequest.getUrl() );
-//            post.clickrate( postRequest.getClickrate() );
+//            post.clickrate(postRequest.getClickrate());
         }
         if ( subreddit != null ) {
             post.subreddit( subreddit );

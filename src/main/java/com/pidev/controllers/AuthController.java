@@ -4,14 +4,18 @@ import com.pidev.dto.AuthenticationResponse;
 import com.pidev.dto.LoginRequest;
 import com.pidev.dto.RefreshTokenRequest;
 import com.pidev.dto.RegisterRequest;
+import com.pidev.models.User;
 import com.pidev.service.AuthService;
 import com.pidev.service.RefreshTokenService;
+import com.pidev.service.UserDetailsServiceImpl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpStatus.OK;
+
+import java.security.Principal;
 
 import javax.validation.Valid;
 
@@ -24,6 +28,7 @@ public class AuthController {
 
 	private final AuthService authService;
 	private final RefreshTokenService refreshTokenService;
+	private UserDetailsServiceImpl userDetailsServiceImpl;
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest) {
@@ -53,6 +58,11 @@ public class AuthController {
         refreshTokenService.deleteRefreshToken(refreshTokenRequest.getRefreshToken());
         return ResponseEntity.status(OK).body("Refresh Token Deleted Successfully!!");
     }
+    
+    @GetMapping("/current-user")
+	public User getCurrentUser(Principal principal) {
+		return (User)this.userDetailsServiceImpl.loadUserByUsername(principal.getName());
+	}
     
    
 }

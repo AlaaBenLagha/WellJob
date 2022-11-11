@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableAsync;
 import lombok.extern.slf4j.Slf4j;
 import com.pidev.WellJobApplication;
+import com.pidev.config.SwaggerConfiguration;
 
 
 
@@ -18,6 +19,7 @@ import com.pidev.WellJobApplication;
 @Slf4j
 @EnableAsync
 @SpringBootApplication
+@Import(SwaggerConfiguration.class)
 public class WellJobApplication {
 
 	public static void main(String[] args) {

@@ -33,12 +33,18 @@
 		</dependency>
 		
 		
-		
-		<dependency>
-    		<groupId>org.springframework.security.oauth.boot</groupId>
-    		<artifactId>spring-security-oauth2-autoconfigure</artifactId>
-    		<version>2.1.6.RELEASE</version>
-		</dependency>
+
+   <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.17.2</version>
+            <scope>test</scope>
+        </dependency>
+
+<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+        </dependency>
 
 
 		<dependency>
@@ -46,6 +52,14 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 		
+		<dependency>
+		  <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf-spring5</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>nz.net.ultraq.thymeleaf</groupId>
+            <artifactId>thymeleaf-layout-dialect</artifactId>
+        </dependency>
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -155,7 +169,17 @@
             <scope>test</scope>
         </dependency>
         
-        
+        <!-- Spring Fox Dependencies -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.9.2</version>
+        </dependency>
         
         
         <dependency>

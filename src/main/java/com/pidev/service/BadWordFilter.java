@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,8 @@ public class BadWordFilter {
 
 	  private static Map<String, String[]> allBadWords = new HashMap<String, String[]>();
 
-	  public static String getCensoredText(final String input) {
+
+	  public String getCensoredText(final String input) {
 		  loadBadWords();
 	    if (input == null) {
 	      return "";

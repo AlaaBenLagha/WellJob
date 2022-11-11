@@ -28,11 +28,11 @@ import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 
-import static java.time.Instant.now;
+
 
 @Service
 @AllArgsConstructor
-@Slf4j
+@Transactional
 public class AuthService {
 	private final PasswordEncoder passwordEncoder;
 	private final UserRepository userRepository;
@@ -57,11 +57,8 @@ public class AuthService {
         userRepository.save(user);
 
         String token = generateVerificationToken(user);
-//        String message = mailContentBuilder.build("Thank you for signing up to Spring Reddit, please click on the below url to activate your account : "
-//                + ACTIVATION_EMAIL + "/" + token);
-//
-//        mailService.sendMail(new NotificationEmail("Please Activate your account", user.getEmail(), message));
-                mailService.sendMail(new NotificationEmail("Please Activate your Account",
+
+        mailService.sendMail(new NotificationEmail("Please Activate your Account",
                 user.getEmail(), "Thank you for signing up to Spring Reddit, " +
                 "please click on the below url to activate your account : " +
                 "http://localhost:8084/api/auth/accountVerification/" + token));

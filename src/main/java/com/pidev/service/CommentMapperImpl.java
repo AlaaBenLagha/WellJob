@@ -5,10 +5,11 @@ package com.pidev.service;
 import com.pidev.dto.CommentsDto;
 import com.pidev.mapper.CommentMapper;
 import com.pidev.models.Comment;
-import com.pidev.models.Comment.CommentBuilder;
 import com.pidev.models.Post;
 
 import com.pidev.models.User;
+
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Generated;
@@ -19,8 +20,8 @@ import javax.annotation.Generated;
 	    date = "2020-07-22T15:53:55+0530",
 	    comments = "version: 1.3.1.Final, compiler: javac, environment: Java 1.8.0_211 (Oracle Corporation)"
 	)
-@Service
-public class CommentMapperImpl implements CommentMapper {
+@Component
+public class CommentMapperImpl extends CommentMapper {
 
     @Override
     public Comment map(CommentsDto commentsDto, Post post, User user) {
@@ -39,8 +40,8 @@ public class CommentMapperImpl implements CommentMapper {
         if ( user != null ) {
             comment.setUser( user );
         }
-        comment.setCreatedDate( java.time.Instant.now() );
 
+        comment.setCreatedDate( java.time.Instant.now());
         return comment;
     }
 
@@ -53,9 +54,8 @@ public class CommentMapperImpl implements CommentMapper {
         CommentsDto commentsDto = new CommentsDto();
 
         commentsDto.setId( comment.getId() );
-        commentsDto.setCreatedDate( comment.getCreatedDate() );
         commentsDto.setText( comment.getText() );
-
+        commentsDto.setCreatedDate(getCreationDate(comment));
         commentsDto.setUserName( comment.getUser().getUsername() );
         commentsDto.setPostId( comment.getPost().getPostId() );
 

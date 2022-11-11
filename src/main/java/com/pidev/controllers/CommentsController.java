@@ -1,17 +1,15 @@
 package com.pidev.controllers;
 
 import com.pidev.dto.CommentsDto;
-import com.pidev.exception.SpringRedditException;
-import com.pidev.models.Comment;
+
 import com.pidev.service.BadWordFilter;
 import com.pidev.service.CommentService;
 
 import lombok.AllArgsConstructor;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,15 +23,15 @@ import static org.springframework.http.HttpStatus.OK;
 @AllArgsConstructor
 public class CommentsController {
     private final CommentService commentService;
-    @Autowired
-    BadWordFilter BadWordFilter;
+    
+    private final BadWordFilter BadWordFilter;
 
     @PostMapping
     public ResponseEntity<?> createComment(@RequestBody CommentsDto commentsDto) {
     	commentsDto.setText(BadWordFilter.getCensoredText(commentsDto.getText()));
     	
         commentService.save(commentsDto);
-        return new ResponseEntity<String>("Created ",HttpStatus.ACCEPTED);
+        return new ResponseEntity<String>(commentsDto.getText(),HttpStatus.ACCEPTED);
     }
     
     
