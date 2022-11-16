@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Title: WellJob
+Implementation-Version: 1.0
+Built-By: alaw-
+Implementation-Vendor-Id: com.pidev
+Build-Jdk: 1.8.0_341
+Implementation-URL: https://spring.io/projects/spring-boot/WellJob
+Created-By: Maven Integration for Eclipse
+
