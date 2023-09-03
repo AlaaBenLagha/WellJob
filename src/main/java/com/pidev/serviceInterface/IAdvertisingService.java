@@ -7,7 +7,7 @@ import com.pidev.models.Advertising;
 public interface IAdvertisingService {
 
 	List<Advertising> getAllAdvertising();
-	Advertising addAdvertising(Advertising Article);
+	Advertising addAdvertising(Advertising Article, Long idOffre);
 	void deleteAdvertising(Long id);
 	Advertising updateAdvertising(Advertising Article , Long id);
 	Advertising getAdvertising(Long id);

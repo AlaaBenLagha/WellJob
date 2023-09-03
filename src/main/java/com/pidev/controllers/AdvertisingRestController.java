@@ -3,6 +3,7 @@ package com.pidev.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,17 +18,18 @@ import com.pidev.models.Advertising;
 import com.pidev.serviceInterface.IAdvertisingService;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/advertising")
 public class AdvertisingRestController {
 	
 	@Autowired
 	IAdvertisingService advertisingService;
 	
-			//http://localhost:8082/SpringMVC/advertising/addadvertising
-			@PostMapping("/addadvertising")
+			//http://localhost:8082/SpringMVC/advertising/addadvertising/
+			@PostMapping("/addadvertising/{id}")
 			@ResponseBody	
-			public Advertising addCollab(@RequestBody Advertising ad) {
-				return advertisingService.addAdvertising(ad);		
+			public Advertising addCollab(@RequestBody Advertising ad, @PathVariable("id")  Long idOffre) {
+				return advertisingService.addAdvertising(ad, idOffre);		
 
 			}
 			

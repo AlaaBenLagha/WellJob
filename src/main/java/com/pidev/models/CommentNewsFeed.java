@@ -12,12 +12,16 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.FieldDefaults;
 
 @Getter
 @Setter
@@ -26,6 +30,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name ="commentNewsFeed")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CommentNewsFeed implements Serializable{
 	
 private static final long serialVersionUID = 1L;
@@ -33,12 +38,12 @@ private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long IdComment;
-	@NonNull
 	@Temporal(TemporalType.DATE)
 	private Date DateComment;
 	@NonNull
 	private String ContentComment;
 	
+	@JsonIgnore
 	@ManyToOne
 	private PostNewsFeed postNewsFeed;
 	

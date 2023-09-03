@@ -46,10 +46,10 @@ public class User implements Serializable {
 	private String UserName;
 	private String Password;
 	@Enumerated(EnumType.STRING)
-	private UserRole Role;
+	private UserRole Roleuser;
 	private Long Score;
 	@Enumerated(EnumType.STRING)
-	private UserRank Rank;
+	private UserRank Rankuser;
 	private String Favoris;
 	private String Departement;
 	

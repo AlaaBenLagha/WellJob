@@ -35,11 +35,6 @@ private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="Id_User")
-	private Long IdUser;
-	
-	
-	@NonNull 
 	private Long IdBadge;
 	
 	@NonNull 

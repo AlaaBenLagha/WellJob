@@ -2,11 +2,13 @@ package com.pidev.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.pidev.models.Collaboration;
-import com.pidev.models.User;
 import com.pidev.repository.CollaborationRepository;
 import com.pidev.repository.UserRepository;
 import com.pidev.serviceInterface.ICollaborationService;
@@ -44,6 +46,22 @@ public class CollaborationServiceImpl implements ICollaborationService{
 	@Override
 	public Collaboration getCollaboration(Long id) {
 		return collaborationRepository.findById(id).get();
+	}
+
+//	@Override
+//	public List<Collaboration> statistic() {
+//		return collaborationRepository.countTotalRateByYear();
+//	}
+
+//	@Override
+//	public List<Collaboration> GetAllCollaborations(Specification<Collaboration> spec) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+
+	@Override
+	public List<Collaboration> retrieveAdvertisingByEntreprise(String collaboratedWith) {
+		return collaborationRepository.retrieveCollaborationByTitle(collaboratedWith);
 	}
 
 	

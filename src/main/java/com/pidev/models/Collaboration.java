@@ -46,6 +46,7 @@ public class Collaboration implements Serializable{
 	private String Advantages;
 	@Pattern(regexp="[a-zA-Z]+")
 	private String TypeCollaboration;
+	private Long  rate;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="collaboration")
 	private Set<Offre> offres;

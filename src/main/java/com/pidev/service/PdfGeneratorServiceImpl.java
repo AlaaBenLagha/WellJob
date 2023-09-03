@@ -2,10 +2,13 @@ package com.pidev.service;
 
 import java.io.FileNotFoundException;
 
+import org.springframework.stereotype.Service;
+
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 
+@Service
 public class PdfGeneratorServiceImpl implements PdfGeneratorService{
 	
 	public void pdfCreation(){

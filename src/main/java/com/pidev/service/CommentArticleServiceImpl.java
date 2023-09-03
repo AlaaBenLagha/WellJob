@@ -39,8 +39,8 @@ public class CommentArticleServiceImpl implements ICommentArticleService {
 		// TODO Auto-generated method stub
 		Articles articles = articlesRepository.findById(IdArticle).orElse(null);
 		User user = userRepository.findById(IdUser).orElse(null);
-		Comment.setArticles(articles);
-		Comment.setUser(user);
+//		Comment.setArticles(articles);
+//		Comment.setUser(user);
 		return commentArticleRepository.save(Comment);
 	}
 

@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "name": "file",
+      "type": "com.pidev.config.DocumentStorageProperty",
+      "sourceType": "com.pidev.config.DocumentStorageProperty"
+    }
+  ],
+  "properties": [
+    {
+      "name": "file.upload-dir",
+      "type": "java.lang.String",
+      "sourceType": "com.pidev.config.DocumentStorageProperty"
+    }
+  ],
+  "hints": []
+}

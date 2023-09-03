@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -44,6 +45,10 @@ private static final long serialVersionUID = 1L;
 	@NonNull
 	private String ContentPost;
 	private int LikePost;
+	@Column(nullable = true, length = 64)
+    private String photos;
+	@NonNull
+	private String TitlePost;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="postNewsFeed")
 	private Set<CommentNewsFeed> commentNewsFeeds;

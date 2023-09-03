@@ -1,5 +1,6 @@
 package com.pidev.controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pidev.models.CommentNewsFeed;
+import com.pidev.repository.CommentNewsFeedRepository;
+import com.pidev.service.BadWordsServiceImpl;
 import com.pidev.serviceInterface.ICommentNewsFeedService;
 
 @RestController
@@ -22,13 +25,18 @@ public class CommentNewsFeedRestController {
 	
 	@Autowired
 	ICommentNewsFeedService commentService;
+	@Autowired
+	BadWordsServiceImpl badwordsService;
 	
 		//http://localhost:8082/SpringMVC/commentnewsfeed/addcomment
-			@PostMapping("/addcomment")
+			@PostMapping("/addcomment/{id}")
 			@ResponseBody	
-			public CommentNewsFeed addComment(@RequestBody CommentNewsFeed comment) {
-				return commentService.addComment(comment);		
-
+			public CommentNewsFeed addComment(@RequestBody CommentNewsFeed comment,@PathVariable("id") Long idPost) {
+				String input= comment.getContentComment();
+				String output = badwordsService.getCensoredText(input);
+				comment.setContentComment(output);
+				comment.setDateComment(new Date());
+				return commentService.addComment(comment, idPost);		
 			}
 			
 			//http://localhost:8082/SpringMVC/commentnewsfeed/getcomment/
@@ -40,10 +48,10 @@ public class CommentNewsFeedRestController {
 			}
 			
 			//http://localhost:8082/SpringMVC/commentnewsfeed/getallcomments
-			@GetMapping("/getallcomments")
+			@GetMapping("/getallcomments/{id}")
 			@ResponseBody
-			public List<CommentNewsFeed> GetComments() {
-				return commentService.getAllComments();
+			public List<CommentNewsFeed> GetComments(@PathVariable("id") Long idPost) {
+				return commentService.getAllComments(idPost);
 
 			}
 			

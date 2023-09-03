@@ -20,8 +20,8 @@ public class SwaggerConfig {
 //				.build().apiInfo(apiInfo());
 //	}
 //	
-//	private ApiInfo apiInfo () {
-//		return new ApiInfoBuilder()
+//	private ApiInfo apiInfo () { 
+//		return new ApiInfoBuilder() 
 //		.title("Swagger Configuration for SpringProject")
 //		.description("\"Spring Boot Swagger configuration\"")
 //		.version("1.1.0").build();

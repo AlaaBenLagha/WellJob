@@ -13,5 +13,4 @@ public interface IReservationService {
 	Reservation updateReservation(Reservation reservation , Long id);
 	Reservation getReservation(Long id);
 	void generatePdf(HttpServletResponse response);
-
 }

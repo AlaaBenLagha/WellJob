@@ -13,7 +13,7 @@ public class MailSenderRestController {
 	
 	@GetMapping("/mail")
 	public void sendMail(){
-		mailSender.sendSimpleMessage("fatma.naili@esprit.tn", "test", "ok");
+		mailSender.sendSimpleMessage("testproject044@gmail.com", "new notification", "new reservation added!");
 	}
 
 }

@@ -1,13 +1,12 @@
 package com.pidev.controllers;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -77,7 +76,6 @@ public class ReservationRestController {
 		    public void exportToPDF(HttpServletResponse response) throws DocumentException, IOException {
 		        reservationService.generatePdf(response);
 			}
-	
 	
 
 }

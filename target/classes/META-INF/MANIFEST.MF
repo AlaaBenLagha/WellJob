@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Built-By: fatma
+Build-Jdk: 17.0.2
+Implementation-Title: WellJob
+Implementation-Version: 1.0
+Implementation-Vendor-Id: com.pidev
+Implementation-URL: https://spring.io/projects/spring-boot/WellJob
+Created-By: Maven Integration for Eclipse
+

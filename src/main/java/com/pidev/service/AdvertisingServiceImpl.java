@@ -1,19 +1,23 @@
 package com.pidev.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pidev.models.Advertising;
+import com.pidev.models.Offre;
 import com.pidev.repository.AdvertisingRepository;
-
+import com.pidev.repository.OffreRepository;
 import com.pidev.serviceInterface.IAdvertisingService;
 
 @Service
 public class AdvertisingServiceImpl implements IAdvertisingService{
 	@Autowired
 	AdvertisingRepository advertisingRepository;
+	@Autowired
+	OffreRepository offreRepository;
 
 	@Override
 	public List<Advertising> getAllAdvertising() {
@@ -21,7 +25,9 @@ public class AdvertisingServiceImpl implements IAdvertisingService{
 	}
 
 	@Override
-	public Advertising addAdvertising(Advertising ad) {
+	public Advertising addAdvertising(Advertising ad, Long idOffre) {
+		Offre offre = offreRepository.findById(idOffre).orElse(null);
+		ad.setOffre(offre);
 		return advertisingRepository.save(ad);
 	}
 

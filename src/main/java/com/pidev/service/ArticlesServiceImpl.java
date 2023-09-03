@@ -33,7 +33,7 @@ public class ArticlesServiceImpl implements IArticlesService {
 	@Transactional
 	public Articles addArticle(Articles Article, Long IdUser) {
 		User user = userRepository.findById(IdUser).orElse(null);
-		Article.setUser(user);
+//		Article.setUser(user);
 //		LikeArticle likeArticle = Article.getLikeArticle();
 //		likeArticle.setArticles(Article);
 		return articlesRepository.save(Article);
